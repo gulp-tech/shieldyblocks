@@ -15,7 +15,11 @@ jobs:
           java-version: '21'
       - name: Build
         working-directory: ShieldyBlocks
-        run: bash gradlew build --no-daemon
+        run: |
+          if ! bash gradlew build --no-daemon > build.log 2>&1; then
+            python3 -c 'from pathlib import Path; text = Path("build.log").read_text(errors="replace")[-16000:]; print("::error::" + text.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A"))'
+            exit 1
+          fi
       - uses: actions/upload-artifact@v4
         with:
           name: shieldyblocks-plugin
