@@ -20,6 +20,18 @@ jobs:
             python3 -c 'from pathlib import Path; text = Path("build.log").read_text(errors="replace")[-16000:]; print("::error::" + text.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A"))'
             exit 1
           fi
+      - name: Transfer built jar
+        working-directory: ShieldyBlocks
+        run: |
+          python3 - <<'PY'
+          import base64, pathlib
+          data = base64.b64encode(pathlib.Path('build/libs/shieldyblocks-1.2.0.jar').read_bytes()).decode()
+          chunks = [data[i:i+32000] for i in range(0, len(data), 32000)]
+          if len(chunks) > 10:
+              raise SystemExit('Jar is too large to transfer via annotations')
+          for i, chunk in enumerate(chunks):
+              print(f'::notice title=JAR part {i:02d}::{chunk}')
+          PY
       - uses: actions/upload-artifact@v4
         with:
           name: shieldyblocks-plugin
