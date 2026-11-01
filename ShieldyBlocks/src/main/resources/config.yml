@@ -1,0 +1,216 @@
+default-region-commands:
+  - rg flag -w {world} {region} pvp allow
+  - rg flag -w {world} {region} tnt allow
+  - rg flag -w {world} {region} creeper-explosion allow
+  - rg flag -w {world} {region} other-explosion allow
+  - rg flag -w {world} {region} ghast-fireball allow
+  - rg flag -w {world} {region} wither-damage allow
+  - rg flag -w {world} {region} enderdragon-block-damage allow
+  - rg flag -w {world} {region} pistons allow
+  - rg flag -w {world} {region} mob-spawning allow
+  - rg flag -w {world} {region} passthrough allow
+  - rg flag -w {world} {region} greeting &fВы вошли в регион игрока {player}
+  - rg flag -w {world} {region} farewell &fВы покинули регион игрока {player}
+
+database:
+  file: regions.db
+
+limits:
+  default: 4
+  overrides:
+    vip: 3
+    premium: 5
+    star: 4
+    meteor: 5
+    guardian: 5
+    paladin: 6
+    neo: 6
+    moon: 7
+    magister: 7
+    rocket: 8
+    ghost: 12
+    '4': 4
+    '5': 5
+    '6': 6
+    '7': 7
+    '8': 8
+    '12': 12
+
+blacklisted-worlds:
+  - world
+
+hologram:
+  offset-y: 2.1
+  line-spacing: 0.25
+  refresh-ticks: 10
+  lines:
+    - 'rgb(148,163,184){block_name}'
+    - 'rgb(148,163,184)Владелец: &#F8FAFC{owner}'
+    - 'rgb(148,163,184)Радиус: &#FDE68A{radius}'
+    - 'rgb(148,163,184)Прочность: &#FCA5A5{current_durability}&#94A3B8/&#FDE68A{max_durability}'
+
+messages:
+  region-created: '&#34D399Создан &#A7F3D0{block_name}&#34D399 с радиусом &#FDE68A{radius} &#34D399и прочностью &#FCA5A5{current_durability}&#94A3B8/&#FDE68A{max_durability}&#34D399.'
+  region-removed-player: '&#FB7185Ваш регион удалён: блок привата сломал &#F8FAFC{player}&#FB7185.'
+  region-removed-explosion: '&#FB7185Ваш регион удалён: блок привата уничтожен взрывом.'
+  region-create-failed: '&#F87171Не удалось создать регион для типа {block_name}&#F87171.'
+  region-create-intersection: '&#F59E0BНельзя установить {block_name}&#F59E0B: область пересекается с другим регионом.'
+  region-create-limit-reached: '&#F59E0BНельзя установить {block_name}&#F59E0B: достигнут лимит регионов &#FDE68A{current}/{limit}&#F59E0B.'
+  region-remove-failed: '&#F87171Не удалось корректно удалить ваш регион.'
+
+  command-player-only: '&#F87171Эта команда доступна только игроку.'
+  command-no-permission: '&#F87171У вас нет прав на эту команду.'
+
+  command-usage: |
+    &#C4B5FDИспользование:
+    rgb(148,163,184)/ps add [номер] <ник> &#64748B- &#F8FAFCдобавить игрока в регион
+    rgb(148,163,184)/ps remove [номер] <ник> &#64748B- &#F8FAFCудалить игрока из региона
+    rgb(148,163,184)/ps list &#64748B- &#F8FAFCпосмотреть список своих регионов
+    rgb(148,163,184)/ps toggle &#64748B- &#F8FAFCвключить или отключить установку блоков привата
+    rgb(148,163,184)/ps reload &#64748B- &#F8FAFCперезагрузить конфиг
+    rgb(148,163,184)/ps give <игрок> <block-id> &#64748B- &#F8FAFCвыдать приват-блок
+    rgb(148,163,184)/ps lookuptnt <id> &#64748B- &#F8FAFCсохранить кастомный TNT в базу
+
+  command-update-failed: '&#F87171Не удалось обновить данные региона.'
+  command-reload-success: '&#34D399Конфиг успешно перезагружен.'
+  command-reload-failed: '&#F87171Не удалось перезагрузить плагин. Причина: &#F8FAFC{reason}'
+
+  command-give-success: '&#38BDF8Игроку &#F8FAFC{target} &#38BDF8выдан блок {block_name} &#64748B({block_id})&#38BDF8.'
+  command-give-error-player-offline: '&#F59E0BИгрок &#F8FAFC{target} &#F59E0Bне найден на сервере.'
+  command-give-error-unknown-block: '&#F59E0BТип блока &#F8FAFC{block_id} &#F59E0Bне найден в конфиге.'
+
+  command-lookuptnt-waiting: '&#38BDF8Подожгите TNT {tnt} рядом с собой в течении {seconds} секунд'
+  command-lookuptnt-saved: '&#34D399TNT сохранён: &#F8FAFC{tnt}&#34D399.'
+  command-lookuptnt-empty: '&#F59E0BTNT &#F8FAFC{tnt} &#F59E0Bне имеет опознавательных знаков.'
+  command-lookuptnt-timeout: '&#F59E0BОжидание TNT истекло: &#F8FAFC{tnt}&#F59E0B.'
+  command-lookuptnt-invalid-name: '&#F59E0BИспользуйте id: a-z, 0-9, _ или -.'
+
+  command-add-success: '&#34D399Игрок &#F8FAFC{target} &#34D399добавлен в регион №&#FDE68A{number}&#34D399.'
+  command-add-error-player-offline: '&#F59E0BИгрок &#F8FAFC{target} &#F59E0Bне найден на сервере.'
+  command-add-error-already-member: '&#F59E0BИгрок &#F8FAFC{target} &#F59E0Bуже состоит в этом регионе.'
+
+  command-remove-success: '&#38BDF8Игрок &#F8FAFC{target} &#38BDF8удалён из региона №&#FDE68A{number}&#38BDF8.'
+  command-remove-error-not-member: '&#F59E0BИгрока &#F8FAFC{target} &#F59E0Bнет в этом регионе.'
+  command-remove-error-self: '&#F59E0BЧтобы удалить свой регион, сломайте его приват-блок.'
+
+  command-error-not-in-own-region: '&#F87171Вы должны стоять в своём регионе или указать корректный номер.'
+  command-region-number-invalid: '&#F87171Регион с номером &#FDE68A{number} &#F87171не найден.'
+
+  command-list-empty: '&#C4B5FDУ вас пока нет регионов.'
+  command-list-header: '&#A7F3D0Ваши регионы &#64748B(всего: &#F8FAFC{count}&#64748B)'
+  command-list-entry: '&#FDE68A#{number} &#64748B• {block_name} &#64748B• &#F8FAFC{x} {y} {z} &#64748B• {world} &#64748B• прочность: &#FCA5A5{current_durability}&#94A3B8/&#FDE68A{max_durability} &#64748B• расстояние: &#E2E8F0{distance}'
+  command-list-distance-other-world: '&#94A3B8в другом мире'
+
+  command-toggle-enabled: '&#34D399Установка блоков привата включена.'
+  command-toggle-disabled: '&#F59E0BУстановка блоков привата отключена.'
+
+  command-info-message: |
+    &#A7F3D0Информация о регионе &#FDE68A#{number} &#64748B({region})
+    &#64748B• Владелец: &#F8FAFC{owner}
+    &#64748B• Участники: &#F8FAFC{participants}
+    &#64748B• Тип блока: &#F8FAFC{block_name}
+    &#64748B• Прочность: &#FCA5A5{current_durability}&#94A3B8/&#FDE68A{max_durability}
+    &#64748B• Мир: &#F8FAFC{world}
+    &#64748B• Границы: &#F8FAFC{min_x}, {min_y}, {min_z} &#64748B— &#F8FAFC{max_x}, {max_y}, {max_z}
+
+  command-info-not-in-region: '&#F87171Вы должны находиться в регионе, чтобы использовать эту команду.'
+  command-info-no-permission-others: '&#F87171Вы не можете смотреть информацию о чужих регионах.'
+
+blocks:
+  common:
+    display-name: '&#34D399Средний регион'
+    material: EMERALD_ORE
+    unique: false
+    radius: 10
+    durability: 1
+    allowed-tnts: []
+    explosion-block-chance: 0
+    hologram:
+      member-view-distance: 48
+      other-view-distance: 24
+
+  solid:
+    display-name: '&#F59E0BПрочный регион'
+    material: ANCIENT_DEBRIS
+    unique: false
+    radius: 10
+    durability: 2
+    allowed-tnts: []
+    explosion-block-chance: 0
+    hologram:
+      member-view-distance: 48
+      other-view-distance: 24
+
+  silent:
+    display-name: '&#3423F9Скрытый регион'
+    material: BROWN_MUSHROOM_BLOCK
+    unique: true
+    radius: 30
+    durability: 1
+    allowed-tnts: []
+    explosion-block-chance: 0
+    hologram:
+      member-view-distance: 48
+      other-view-distance: 3
+
+  gold:
+    display-name: '&#FFD700Золотой приват'
+    material: GOLD_BLOCK
+    unique: false
+    radius: 5
+    durability: 1
+    allowed-tnts: []
+    explosion-block-chance: 0
+    hologram:
+      member-view-distance: 48
+      other-view-distance: 24
+
+  diamond:
+    display-name: '&#55FFFFАлмазный приват'
+    material: DIAMOND_BLOCK
+    unique: false
+    radius: 10
+    durability: 1
+    allowed-tnts: []
+    explosion-block-chance: 0
+    hologram:
+      member-view-distance: 48
+      other-view-distance: 24
+
+  diamond_ore:
+    display-name: '&#55FFFFРудный приват'
+    material: DIAMOND_ORE
+    unique: false
+    radius: 15
+    durability: 1
+    allowed-tnts: []
+    explosion-block-chance: 0
+    hologram:
+      member-view-distance: 48
+      other-view-distance: 24
+
+  emerald:
+    display-name: '&#55FF55Изумрудный приват'
+    material: EMERALD_BLOCK
+    unique: false
+    radius: 25
+    durability: 1
+    allowed-tnts:
+      - tnt_poseidon
+      - tnt_heavy
+    explosion-block-chance: 0
+    hologram:
+      member-view-distance: 48
+      other-view-distance: 24
+
+  reinforced:
+    display-name: '&#A385F8Укреплённый приват'
+    material: REINFORCED_DEEPSLATE
+    unique: true
+    radius: 30
+    durability: 4
+    allowed-tnts: []
+    explosion-block-chance: 50
+    hologram:
+      member-view-distance: 48
+      other-view-distance: 24

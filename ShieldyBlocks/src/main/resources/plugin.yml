@@ -1,0 +1,66 @@
+name: ShieldyBlocks
+version: ${version}
+main: im.apeki.shieldyblocks.ShieldyBlocksPlugin
+api-version: '1.21'
+author: musd348
+
+depend:
+  - WorldGuard
+
+softdepend:
+  - DecentHolograms
+  - HolographicDisplays
+  - HyperTNT
+
+commands:
+  shieldyblocks:
+    aliases:
+      - ps
+    usage: /shieldyblocks <add|remove|list|toggle|reload|give|lookuptnt|info>
+
+permissions:
+  shieldyblocks.admin:
+    description: "Все команды администратора"
+    default: op
+  shieldyblocks.info:
+    description: "Команда /ps info"
+    default: true
+  shieldyblocks.info.others:
+    description: "Команда /ps info в чужих регионах"
+    default: op
+  shieldyblocks.use:
+    description: "Использование приват-блоков"
+    default: true
+  shieldyblocks.limit.4:
+    default: false
+  shieldyblocks.limit.5:
+    default: false
+  shieldyblocks.limit.6:
+    default: false
+  shieldyblocks.limit.7:
+    default: false
+  shieldyblocks.limit.8:
+    default: false
+  shieldyblocks.limit.12:
+    default: false
+  shieldyblocks.limit.star:
+    default: false
+  shieldyblocks.limit.meteor:
+    default: false
+  shieldyblocks.limit.guardian:
+    default: false
+  shieldyblocks.limit.paladin:
+    default: false
+  shieldyblocks.limit.neo:
+    default: false
+  shieldyblocks.limit.moon:
+    default: false
+  shieldyblocks.limit.magister:
+    default: false
+  shieldyblocks.limit.rocket:
+    default: false
+  shieldyblocks.limit.ghost:
+    default: false
+
+libraries:
+  - org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}
