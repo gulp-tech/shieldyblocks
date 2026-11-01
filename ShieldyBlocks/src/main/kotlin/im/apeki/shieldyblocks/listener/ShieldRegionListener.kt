@@ -293,7 +293,7 @@ class ShieldRegionListener(
         HyperTntBridge.resolveTypeId(entity)?.let { return it }
 
         return when (entity.type) {
-            EntityType.TNT, EntityType.MINECART_TNT ->
+            EntityType.TNT, EntityType.TNT_MINECART ->
                 plugin.currentCustomTntService().resolveTntId(entity)
             EntityType.WITHER, EntityType.WITHER_SKULL -> "wither"
             EntityType.CREEPER -> "creeper"
