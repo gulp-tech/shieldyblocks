@@ -20,17 +20,101 @@ jobs:
             python3 -c 'from pathlib import Path; text = Path("build.log").read_text(errors="replace")[-16000:]; print("::error::" + text.replace("%", "%25").replace("\r", "%0D").replace("\n", "%0A"))'
             exit 1
           fi
-      - name: Transfer built jar
+      - name: Transfer jar part group 0
         working-directory: ShieldyBlocks
         run: |
           python3 - <<'PY'
           import base64, pathlib
           data = base64.b64encode(pathlib.Path('build/libs/shieldyblocks-1.2.0.jar').read_bytes()).decode()
-          chunks = [data[i:i+32000] for i in range(0, len(data), 32000)]
-          if len(chunks) > 10:
-              raise SystemExit('Jar is too large to transfer via annotations')
-          for i, chunk in enumerate(chunks):
-              print(f'::notice title=JAR part {i:02d}::{chunk}')
+          chunks = [data[i:i+4000] for i in range(0, len(data), 4000)]
+          if len(chunks) > 80:
+              raise SystemExit('Jar too large to transfer')
+          for i in range(0 * 10, min((0 + 1) * 10, len(chunks))):
+              print(f'::notice title=JAR part {i:03d}::{chunks[i]}')
+          PY
+      - name: Transfer jar part group 1
+        working-directory: ShieldyBlocks
+        run: |
+          python3 - <<'PY'
+          import base64, pathlib
+          data = base64.b64encode(pathlib.Path('build/libs/shieldyblocks-1.2.0.jar').read_bytes()).decode()
+          chunks = [data[i:i+4000] for i in range(0, len(data), 4000)]
+          if len(chunks) > 80:
+              raise SystemExit('Jar too large to transfer')
+          for i in range(1 * 10, min((1 + 1) * 10, len(chunks))):
+              print(f'::notice title=JAR part {i:03d}::{chunks[i]}')
+          PY
+      - name: Transfer jar part group 2
+        working-directory: ShieldyBlocks
+        run: |
+          python3 - <<'PY'
+          import base64, pathlib
+          data = base64.b64encode(pathlib.Path('build/libs/shieldyblocks-1.2.0.jar').read_bytes()).decode()
+          chunks = [data[i:i+4000] for i in range(0, len(data), 4000)]
+          if len(chunks) > 80:
+              raise SystemExit('Jar too large to transfer')
+          for i in range(2 * 10, min((2 + 1) * 10, len(chunks))):
+              print(f'::notice title=JAR part {i:03d}::{chunks[i]}')
+          PY
+      - name: Transfer jar part group 3
+        working-directory: ShieldyBlocks
+        run: |
+          python3 - <<'PY'
+          import base64, pathlib
+          data = base64.b64encode(pathlib.Path('build/libs/shieldyblocks-1.2.0.jar').read_bytes()).decode()
+          chunks = [data[i:i+4000] for i in range(0, len(data), 4000)]
+          if len(chunks) > 80:
+              raise SystemExit('Jar too large to transfer')
+          for i in range(3 * 10, min((3 + 1) * 10, len(chunks))):
+              print(f'::notice title=JAR part {i:03d}::{chunks[i]}')
+          PY
+      - name: Transfer jar part group 4
+        working-directory: ShieldyBlocks
+        run: |
+          python3 - <<'PY'
+          import base64, pathlib
+          data = base64.b64encode(pathlib.Path('build/libs/shieldyblocks-1.2.0.jar').read_bytes()).decode()
+          chunks = [data[i:i+4000] for i in range(0, len(data), 4000)]
+          if len(chunks) > 80:
+              raise SystemExit('Jar too large to transfer')
+          for i in range(4 * 10, min((4 + 1) * 10, len(chunks))):
+              print(f'::notice title=JAR part {i:03d}::{chunks[i]}')
+          PY
+      - name: Transfer jar part group 5
+        working-directory: ShieldyBlocks
+        run: |
+          python3 - <<'PY'
+          import base64, pathlib
+          data = base64.b64encode(pathlib.Path('build/libs/shieldyblocks-1.2.0.jar').read_bytes()).decode()
+          chunks = [data[i:i+4000] for i in range(0, len(data), 4000)]
+          if len(chunks) > 80:
+              raise SystemExit('Jar too large to transfer')
+          for i in range(5 * 10, min((5 + 1) * 10, len(chunks))):
+              print(f'::notice title=JAR part {i:03d}::{chunks[i]}')
+          PY
+      - name: Transfer jar part group 6
+        working-directory: ShieldyBlocks
+        run: |
+          python3 - <<'PY'
+          import base64, pathlib
+          data = base64.b64encode(pathlib.Path('build/libs/shieldyblocks-1.2.0.jar').read_bytes()).decode()
+          chunks = [data[i:i+4000] for i in range(0, len(data), 4000)]
+          if len(chunks) > 80:
+              raise SystemExit('Jar too large to transfer')
+          for i in range(6 * 10, min((6 + 1) * 10, len(chunks))):
+              print(f'::notice title=JAR part {i:03d}::{chunks[i]}')
+          PY
+      - name: Transfer jar part group 7
+        working-directory: ShieldyBlocks
+        run: |
+          python3 - <<'PY'
+          import base64, pathlib
+          data = base64.b64encode(pathlib.Path('build/libs/shieldyblocks-1.2.0.jar').read_bytes()).decode()
+          chunks = [data[i:i+4000] for i in range(0, len(data), 4000)]
+          if len(chunks) > 80:
+              raise SystemExit('Jar too large to transfer')
+          for i in range(7 * 10, min((7 + 1) * 10, len(chunks))):
+              print(f'::notice title=JAR part {i:03d}::{chunks[i]}')
           PY
       - uses: actions/upload-artifact@v4
         with:
