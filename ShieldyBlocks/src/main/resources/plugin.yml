@@ -10,7 +10,6 @@ depend:
 softdepend:
   - DecentHolograms
   - HolographicDisplays
-  - HyperTNT
 
 commands:
   shieldyblocks:

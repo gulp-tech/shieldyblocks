@@ -144,7 +144,7 @@ class ShieldRegionListener(
         handleExplosion(event)
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun onExplosionPrime(event: ExplosionPrimeEvent) {
         val location = event.entity.location.clone()
         val tntId = resolveExplosionId(event.entity)

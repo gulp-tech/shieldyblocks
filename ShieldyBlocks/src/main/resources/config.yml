@@ -2,7 +2,7 @@ default-region-commands:
   - rg flag -w {world} {region} pvp allow
   - rg flag -w {world} {region} tnt allow
   - rg flag -w {world} {region} creeper-explosion allow
-  - rg flag -w {world} {region} other-explosion allow
+  - rg flag -w {world} {region} other-explosion deny
   - rg flag -w {world} {region} ghast-fireball allow
   - rg flag -w {world} {region} wither-damage allow
   - rg flag -w {world} {region} enderdragon-block-damage allow
@@ -121,37 +121,13 @@ blocks:
     display-name: '&#34D399Средний регион'
     material: EMERALD_ORE
     unique: false
-    radius: 10
+    radius: 25
     durability: 1
     allowed-tnts: []
     explosion-block-chance: 0
     hologram:
       member-view-distance: 48
       other-view-distance: 24
-
-  solid:
-    display-name: '&#F59E0BПрочный регион'
-    material: ANCIENT_DEBRIS
-    unique: false
-    radius: 10
-    durability: 2
-    allowed-tnts: []
-    explosion-block-chance: 0
-    hologram:
-      member-view-distance: 48
-      other-view-distance: 24
-
-  silent:
-    display-name: '&#3423F9Скрытый регион'
-    material: BROWN_MUSHROOM_BLOCK
-    unique: true
-    radius: 30
-    durability: 1
-    allowed-tnts: []
-    explosion-block-chance: 0
-    hologram:
-      member-view-distance: 48
-      other-view-distance: 3
 
   gold:
     display-name: '&#FFD700Золотой приват'
@@ -184,20 +160,6 @@ blocks:
     radius: 15
     durability: 1
     allowed-tnts: []
-    explosion-block-chance: 0
-    hologram:
-      member-view-distance: 48
-      other-view-distance: 24
-
-  emerald:
-    display-name: '&#55FF55Изумрудный приват'
-    material: EMERALD_BLOCK
-    unique: false
-    radius: 25
-    durability: 1
-    allowed-tnts:
-      - tnt_poseidon
-      - tnt_heavy
     explosion-block-chance: 0
     hologram:
       member-view-distance: 48
