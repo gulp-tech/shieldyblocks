@@ -51,7 +51,7 @@ class WorldGuardBridgeTest {
         Repository repository = new Repository();
         Manager manager = new Manager();
         when(world.getName()).thenReturn("raid");
-        when(world.getBlockAt(10, 64, 20)).thenReturn(block);
+        when(world.getBlockAt(any(Location.class))).thenReturn(block);
         when(shield.isEnabled()).thenReturn(true);
         when(shield.currentRegionRepository()).thenReturn(repository);
         when(shield.currentRegionManager()).thenReturn(manager);
