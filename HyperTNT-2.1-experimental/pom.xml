@@ -67,7 +67,7 @@
 
     <build>
         <defaultGoal>clean package</defaultGoal>
-        <finalName>HyperTNT-${project.version}</finalName>
+        <finalName>HyperTNT-${project.version}-VISUAL-EXPERIMENTAL</finalName>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

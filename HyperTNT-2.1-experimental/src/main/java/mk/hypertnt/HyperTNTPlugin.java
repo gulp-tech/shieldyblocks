@@ -26,6 +26,7 @@ public final class HyperTNTPlugin extends JavaPlugin implements CommandExecutor,
    private ExplosionService explosionService;
    private WorldGuardBridge worldGuardBridge;
    private TntRegistry registry;
+   private mk.hypertnt.visual.BukkitVisualBridge visualBridge;
    private File messagesFile;
    private FileConfiguration messages;
 
@@ -41,6 +42,18 @@ public final class HyperTNTPlugin extends JavaPlugin implements CommandExecutor,
       this.registry.load();
       this.getLogger().info("Placed TNT registry entries: " + this.registry.size());
       Bukkit.getPluginManager().registerEvents(new TntListener(this), this);
+      if (this.getConfig().getBoolean("experimental-bedrock-visual.enabled", false)) {
+         try {
+            this.visualBridge = new mk.hypertnt.visual.BukkitVisualBridge(this);
+            this.visualBridge.start();
+         } catch (RuntimeException exception) {
+            this.getLogger().warning("Экспериментальный визуальный источник не запущен: " + exception);
+            if (this.visualBridge != null) {
+               try { this.visualBridge.close(); } catch (RuntimeException ignored) { }
+            }
+            this.visualBridge = null;
+         }
+      }
       PluginCommand command = this.getCommand("hypertnt");
       if (command == null) {
          this.getLogger().severe("Command 'hypertnt' is missing in plugin.yml!");
@@ -64,6 +77,11 @@ public final class HyperTNTPlugin extends JavaPlugin implements CommandExecutor,
    }
 
    public void onDisable() {
+      if (this.visualBridge != null) {
+         try { this.visualBridge.close(); }
+         catch (RuntimeException exception) { this.getLogger().warning("Ошибка отключения визуального источника: " + exception); }
+         this.visualBridge = null;
+      }
       if (this.registry != null) {
          this.registry.save();
       }
@@ -77,6 +95,10 @@ public final class HyperTNTPlugin extends JavaPlugin implements CommandExecutor,
 
    public TntRegistry getRegistry() {
       return this.registry;
+   }
+
+   public void noteVisualPrime(org.bukkit.Location location) {
+      if (this.visualBridge != null) this.visualBridge.primed(location);
    }
 
    private void loadMessages() {
@@ -118,6 +140,7 @@ public final class HyperTNTPlugin extends JavaPlugin implements CommandExecutor,
       if (this.tntManager != null) {
          this.tntManager.loadTypes();
       }
+      if (this.visualBridge != null) this.visualBridge.typesReloaded();
 
       this.getLogger().info("HyperTNT configuration reloaded.");
    }

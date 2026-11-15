@@ -1,5 +1,5 @@
 name: HyperTNT
-version: '2.1.0'
+version: '2.1.0-visual-experimental'
 main: mk.hypertnt.HyperTNTPlugin
 api-version: '1.21'
 author: musd348

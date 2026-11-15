@@ -329,6 +329,7 @@ public final class TntListener implements Listener {
       if (location.getBlock().getType() == Material.TNT) {
          location.getBlock().setType(Material.AIR, false);
          this.registry().remove(pos(location));
+         this.plugin.noteVisualPrime(location);
          TNTPrimed primed = this.spawnTnt(location.clone().add(0.5, 0.0, 0.5), type);
          this.startVisuals(primed, type);
       }
