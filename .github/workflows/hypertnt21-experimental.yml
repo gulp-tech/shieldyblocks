@@ -1,0 +1,23 @@
+name: HyperTNT 2.1 experimental piston tests
+on:
+  push:
+    paths:
+      - 'HyperTNT-2.1-experimental/**'
+      - '.github/workflows/hypertnt21-experimental.yml'
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+      - name: Run plugin compile and mocked event tests
+        run: mvn -B -f HyperTNT-2.1-experimental/pom.xml clean package
+      - name: Run standalone registry tests
+        run: |
+          mkdir -p /tmp/hypertnt-test-classes
+          javac -d /tmp/hypertnt-test-classes HyperTNT-2.1-experimental/src/main/java/mk/hypertnt/TntRegistry.java HyperTNT-2.1-experimental/src/testSelf/java/mk/hypertnt/TntRegistryTest.java
+          java -ea -cp /tmp/hypertnt-test-classes mk.hypertnt.TntRegistryTest
