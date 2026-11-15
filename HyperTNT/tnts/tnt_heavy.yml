@@ -9,7 +9,7 @@ tnt_heavy:
 
   item:
     material: TNT
-    custom_model_data: 0
+    custom_model_data: 710104
     enchanted: true
     name: '&c&lТяжёлый фугас'
     lore:

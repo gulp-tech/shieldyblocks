@@ -8,7 +8,7 @@ tnt_fire:
 
   item:
     material: TNT
-    custom_model_data: 0
+    custom_model_data: 710102
     enchanted: false
     name: '&eЗажигательный заряд'
     lore:

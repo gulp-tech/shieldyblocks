@@ -9,7 +9,7 @@ tnt_explosive:
 
   item:
     material: TNT
-    custom_model_data: 0
+    custom_model_data: 710105
     enchanted: true
     name: '&4&lВзрывной динамит'
     lore:

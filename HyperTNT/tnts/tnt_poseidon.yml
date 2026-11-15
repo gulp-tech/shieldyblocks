@@ -8,7 +8,7 @@ tnt_poseidon:
 
   item:
     material: TNT
-    custom_model_data: 0
+    custom_model_data: 710106
     enchanted: true
     name: '&9&lПосейдон'
     lore:

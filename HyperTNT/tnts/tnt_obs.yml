@@ -8,7 +8,7 @@ tnt_obs:
 
   item:
     material: TNT
-    custom_model_data: 0
+    custom_model_data: 710103
     enchanted: false
     name: '&bОбсидиановая бомба'
     lore:
