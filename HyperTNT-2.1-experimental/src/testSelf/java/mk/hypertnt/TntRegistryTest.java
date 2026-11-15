@@ -175,11 +175,32 @@ public final class TntRegistryTest {
         checkEquals("tnt_basic", piston.get(inChunk), "живая запись осталась");
         checkEquals("tnt_basic", piston.get(outChunk), "живая запись осталась (outChunk)");
 
-        // validateIn устойчив к исключениям предиката
-        int droppedAfterError = piston.validateIn(world, 1, 1, (p) -> {
-            throw new IllegalStateException("чанк недоступен");
+        // Недоступный блок нельзя считать удалённым: ошибка, валидный и
+        // устаревший блок одновременно в одном чанке; состояние на диске.
+        Path failureFile = directory.resolve("validation-failure.txt");
+        java.util.List<String> warnings = new java.util.ArrayList<>();
+        TntRegistry validation = new TntRegistry(failureFile, warnings::add);
+        TntRegistry.Pos errored = new TntRegistry.Pos(world, 17, 10, 16);
+        validation.put(inChunk, "tnt_fire");
+        validation.put(outChunk, "tnt_obs");
+        validation.put(errored, "tnt_poseidon");
+        int droppedAfterError = validation.validateIn(world, 1, 1, (p) -> {
+            if (p.equals(errored)) throw new IllegalStateException("чанк недоступен");
+            return p.equals(inChunk); // outChunk определённо больше не TNT
         });
-        checkEquals(2, droppedAfterError, "исключение предиката трактуется как устаревшая запись");
+        checkEquals(1, droppedAfterError, "удаляется только точно устаревшая запись");
+        checkEquals("tnt_fire", validation.get(inChunk), "валидная запись остаётся");
+        checkEquals(null, validation.get(outChunk), "точно устаревшая запись удалена");
+        checkEquals("tnt_poseidon", validation.get(errored), "при ошибке тип TNT сохраняется");
+        checkEquals(1, warnings.size(), "для ошибки выведено предупреждение");
+        check(warnings.get(0).contains(world.toString()) && warnings.get(0).contains("17, 10, 16")
+                && warnings.get(0).contains("чанк недоступен"), "предупреждение содержит место и причину");
+        TntRegistry afterFailureReload = new TntRegistry(failureFile);
+        afterFailureReload.load();
+        checkEquals(validation.snapshot(), afterFailureReload.snapshot(), "сохранённая запись переживает перезапуск");
+        int retryRemoved = validation.validateIn(world, 1, 1, (p) -> !p.equals(errored));
+        checkEquals(1, retryRemoved, "следующая успешная проверка может удалить устаревшую запись");
+        checkEquals(null, validation.get(errored), "при повторной проверке неверный блок удалён");
 
         // removeAll пакетно
         TntRegistry batch = new TntRegistry(directory.resolve("batch.txt"));

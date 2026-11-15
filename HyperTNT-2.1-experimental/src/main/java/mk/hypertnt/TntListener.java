@@ -296,7 +296,8 @@ public final class TntListener implements Listener {
       int dropped = this.registry().validateIn(world, chunk.getX(), chunk.getZ(), (tntPos) -> {
          World target = Bukkit.getWorld(tntPos.world());
          if (target == null || tntPos.y() < -2048 || tntPos.y() > 2048) {
-            return false;
+            // Unknown/uncheckable is not proof that the TNT is gone.
+            throw new IllegalStateException("Мир недоступен или координата Y вне допустимого диапазона");
          }
          return target.getBlockAt(tntPos.x(), tntPos.y(), tntPos.z()).getType() == Material.TNT;
       });

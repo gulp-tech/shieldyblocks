@@ -268,8 +268,9 @@ public final class TntRegistry {
     }
 
     /**
-     * Удаляет устаревшие записи чанка: где блок больше не TNT.
-     * Возвращает число удалённых записей. Один вызов = одно сохранение.
+     * Удаляет записи чанка только если проверка уверенно показала, что блок больше не TNT.
+     * При ошибке проверки запись сохраняется и выводится предупреждение.
+     * Возвращает число удалённых записей. Один вызов = не более одного сохранения.
      */
     public int validateIn(UUID world, int chunkX, int chunkZ, Predicate<Pos> stillTnt) {
         Set<Pos> stale = new LinkedHashSet<>();
@@ -278,7 +279,9 @@ public final class TntRegistry {
             try {
                 valid = stillTnt.test(pos);
             } catch (RuntimeException exception) {
-                valid = false;
+                log.accept("Не удалось проверить TNT " + pos.world() + " (" + pos.x() + ", " + pos.y() + ", " + pos.z() + "): "
+                        + exception + ". Запись сохранена для следующей проверки.");
+                continue;
             }
             if (!valid) {
                 stale.add(pos);
