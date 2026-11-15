@@ -1,0 +1,43 @@
+{
+  "format_version": "1",
+  "items": {
+    "minecraft:tnt": [
+      {
+        "name": "hypertnt_basic",
+        "custom_model_data": 710101,
+        "icon": "hypertnt_basic",
+        "allow_offhand": true
+      },
+      {
+        "name": "hypertnt_fire",
+        "custom_model_data": 710102,
+        "icon": "hypertnt_fire",
+        "allow_offhand": true
+      },
+      {
+        "name": "hypertnt_obs",
+        "custom_model_data": 710103,
+        "icon": "hypertnt_obs",
+        "allow_offhand": true
+      },
+      {
+        "name": "hypertnt_heavy",
+        "custom_model_data": 710104,
+        "icon": "hypertnt_heavy",
+        "allow_offhand": true
+      },
+      {
+        "name": "hypertnt_explosive",
+        "custom_model_data": 710105,
+        "icon": "hypertnt_explosive",
+        "allow_offhand": true
+      },
+      {
+        "name": "hypertnt_poseidon",
+        "custom_model_data": 710106,
+        "icon": "hypertnt_poseidon",
+        "allow_offhand": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "resource_pack_name": "HyperTNT",
+  "texture_name": "atlas.items",
+  "texture_data": {
+    "hypertnt_basic": {
+      "textures": "textures/items/hypertnt_basic"
+    },
+    "hypertnt_fire": {
+      "textures": "textures/items/hypertnt_fire"
+    },
+    "hypertnt_obs": {
+      "textures": "textures/items/hypertnt_obs"
+    },
+    "hypertnt_heavy": {
+      "textures": "textures/items/hypertnt_heavy"
+    },
+    "hypertnt_explosive": {
+      "textures": "textures/items/hypertnt_explosive"
+    },
+    "hypertnt_poseidon": {
+      "textures": "textures/items/hypertnt_poseidon"
+    }
+  }
+}
