@@ -1,0 +1,1 @@
+# HyperTNT placed TNT registry (worldUUID;x;y;z;type)
