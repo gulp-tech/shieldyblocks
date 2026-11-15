@@ -74,6 +74,19 @@ class RegistryVisualPublisherTest {
         assertEquals(Set.of(ca, cb), validated.known());
         assertNull(conn.subscription().poll().batch(), "both chunks published in one revision");
     }
+    @Test void failedCrossChunkRevalidationDoesNotPublishPartialMove() {
+        registry.put(registryPos(a), "tnt_fire"); world.loaded.addAll(Set.of(ca, cb)); world.physicalTnt.add(a); source.initialize();
+        source.refreshChunk(worldId, cb.x(), cb.z());
+        Connection conn = source.connect();
+        source.mutation(Set.of(ca, cb), Reason.PISTON, () -> false);
+        assertEquals(Set.of(ca, cb), conn.subscription().poll().batch().unknown());
+        world.loaded.remove(cb); // chunk went away before revalidation
+        world.tick();
+        assertNull(conn.subscription().poll().batch(), "no partial validated batch");
+        assertTrue(source.chunkSnapshot(ca).knownChunks().isEmpty());
+        assertTrue(source.chunkSnapshot(cb).knownChunks().isEmpty());
+        assertEquals("tnt_fire", registry.get(registryPos(a)));
+    }
     @Test void lateCancellationQuarantinesChunkAndDoesNotChangeRegistry() {
         registry.put(registryPos(a), "tnt_fire"); world.loaded.add(ca); world.physicalTnt.add(a); source.initialize();
         Connection conn = source.connect(); AtomicBoolean cancelled = new AtomicBoolean();

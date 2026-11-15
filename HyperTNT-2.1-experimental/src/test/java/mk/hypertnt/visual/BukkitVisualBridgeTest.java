@@ -9,6 +9,9 @@ import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.plugin.RegisteredListener;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.ServicePriority;
 import org.bukkit.plugin.ServicesManager;
@@ -30,7 +33,7 @@ import static org.mockito.Mockito.*;
 /** Direct calls to event handlers with mocks; not an in-game server test. */
 class BukkitVisualBridgeTest {
     @TempDir Path directory;
-    @Test void observesPlaceAndBreakWithoutChangingEventsOrBlocks() {
+    @Test void observesPlaceAndBreakWithoutChangingEventsOrBlocks() throws Exception {
         HyperTNTPlugin plugin = mock(HyperTNTPlugin.class);
         TntRegistry registry = new TntRegistry(directory.resolve("placed-tnts.txt"));
         TntManager types = mock(TntManager.class);
@@ -78,6 +81,16 @@ class BukkitVisualBridgeTest {
             assertTrue(source.chunkSnapshot(new VisualFeed.Chunk(id, 0, 0)).knownChunks().isEmpty());
             nextTick.remove(0).run();
             assertEquals("tnt_fire", consumer.subscription().poll().batch().upserts().values().iterator().next());
+            BlockBreakEvent cancelled = mock(BlockBreakEvent.class);
+            when(cancelled.isCancelled()).thenReturn(true);
+            EventHandler annotation = BukkitVisualBridge.class.getMethod("onBreak", BlockBreakEvent.class).getAnnotation(EventHandler.class);
+            assertEquals(EventPriority.MONITOR, annotation.priority());
+            assertTrue(annotation.ignoreCancelled());
+            RegisteredListener registered = new RegisteredListener(bridge, (ignored, event) -> bridge.onBreak((BlockBreakEvent) event),
+                    annotation.priority(), plugin, annotation.ignoreCancelled());
+            registered.callEvent(cancelled); // emulate Bukkit skipping an event cancelled before MONITOR
+            assertNull(consumer.subscription().poll().batch());
+            assertTrue(nextTick.isEmpty());
             registry.remove(pos); // gameplay listener already handled removal
             BlockBreakEvent broken = mock(BlockBreakEvent.class);
             when(broken.getBlock()).thenReturn(block);

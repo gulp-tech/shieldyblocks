@@ -21,6 +21,11 @@ jobs:
           mkdir -p /tmp/hypertnt-selftest
           javac -d /tmp/hypertnt-selftest HyperTNT-2.1-experimental/src/main/java/mk/hypertnt/TntRegistry.java HyperTNT-2.1-experimental/src/testSelf/java/mk/hypertnt/TntRegistryTest.java
           java -ea -cp /tmp/hypertnt-selftest mk.hypertnt.TntRegistryTest
+      - name: Check packaged visual protocol using concurrency tests
+        run: |
+          mkdir -p /tmp/visual-selftest
+          javac -d /tmp/visual-selftest HyperTNT-2.1-experimental/src/main/java/mk/hypertnt/visual/VisualFeed.java BedrockVisual-prototype/test/mk/hypertnt/visual/VisualFeedTest.java
+          java -ea -cp /tmp/visual-selftest mk.hypertnt.visual.VisualFeedTest
       - uses: actions/upload-artifact@v4
         with:
           name: HyperTNT-2.1.0-VISUAL-EXPERIMENTAL-TEST-ONLY

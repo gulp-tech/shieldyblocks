@@ -96,7 +96,14 @@ public final class RegistryVisualPublisher implements VisualSource, AutoCloseabl
         for (VisualFeed.Chunk chunk : chunks) pending.computeIfAbsent(chunk, ignored -> new ArrayList<>()).add(cancelled);
         if (!scheduled) {
             scheduled = true;
-            world.nextTick(this::flush);
+            world.nextTick(this::flushSafely);
+        }
+    }
+    private void flushSafely() {
+        try { flush(); }
+        catch (RuntimeException failure) {
+            try { warn.accept("Визуальный источник отключён из-за ошибки: " + failure); }
+            finally { close(); }
         }
     }
     private void flush() {
