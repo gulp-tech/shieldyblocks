@@ -85,6 +85,54 @@ public final class VisualFeed implements AutoCloseable {
                 !valid && wasKnown ? Set.of(chunk) : Set.of()));
     }
 
+    /**
+     * Invalidate all affected chunks in a single revision. An unknown chunk is
+     * not an empty chunk: the consumer must remove any visual substitutions.
+     * This changes the visual view only, never HyperTNT's persistent registry.
+     */
+    public synchronized void invalidateChunks(Set<Chunk> affected) {
+        requireOpen();
+        Set<Chunk> chunks = Set.copyOf(affected); // validates all inputs before mutation
+        Set<Chunk> previouslyKnown = new LinkedHashSet<>(known);
+        previouslyKnown.retainAll(chunks);
+        Set<Pos> removed = new LinkedHashSet<>();
+        for (Pos pos : entries.keySet()) {
+            if (chunks.contains(pos.chunk())) removed.add(pos);
+        }
+        if (previouslyKnown.isEmpty() && removed.isEmpty()) return;
+        removed.forEach(entries::remove);
+        known.removeAll(chunks);
+        emit(new Batch(epoch, ++revision, Reason.CHUNK_UNKNOWN, Map.of(), removed, Set.of(), chunks));
+    }
+
+    /**
+     * Publish an operation touching all supplied chunks, or invalidate ALL of
+     * them atomically if any one is unknown. Callers must include even chunks
+     * touched only by ordinary (unregistered) blocks.
+     * @return true when the operation could be represented as a delta
+     */
+    public synchronized boolean changeOrInvalidate(Reason reason, Map<Pos, String> upserts,
+                                                    Set<Pos> removals, Set<Chunk> affected) {
+        requireOpen(); Objects.requireNonNull(reason);
+        if (reason == Reason.CHUNK_VALIDATED || reason == Reason.CHUNK_UNKNOWN) throw new IllegalArgumentException("use chunk()");
+        Map<Pos, String> safeUpserts = Map.copyOf(upserts);
+        Set<Pos> safeRemovals = Set.copyOf(removals);
+        Set<Chunk> safeAffected = Set.copyOf(affected);
+        for (Map.Entry<Pos, String> item : safeUpserts.entrySet()) {
+            if (item.getValue().isBlank() || safeRemovals.contains(item.getKey())
+                    || !safeAffected.contains(item.getKey().chunk())) throw new IllegalArgumentException("invalid upsert");
+        }
+        for (Pos pos : safeRemovals) {
+            if (!safeAffected.contains(pos.chunk())) throw new IllegalArgumentException("missing affected chunk");
+        }
+        if (!known.containsAll(safeAffected)) {
+            invalidateChunks(safeAffected);
+            return false;
+        }
+        change(reason, safeUpserts, safeRemovals);
+        return true;
+    }
+
     /** One atomic delta, for example both ends of an entire piston movement. */
     public synchronized void change(Reason reason, Map<Pos, String> upserts, Set<Pos> removals) {
         requireOpen(); Objects.requireNonNull(reason); Objects.requireNonNull(upserts); Objects.requireNonNull(removals);
