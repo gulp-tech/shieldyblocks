@@ -1,0 +1,29 @@
+name: Verify prior HyperTNT experimental artifact
+on:
+  push:
+    paths:
+      - .github/workflows/verify-hypertnt-artifact.yml
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download original experimental build artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: HyperTNT-2.1.0-VISUAL-EXPERIMENTAL-TEST-ONLY
+          run-id: 43744922837
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path: extracted
+      - name: Record binary hash
+        shell: bash
+        run: |
+          set -euo pipefail
+          jar=extracted/HyperTNT-2.1.0-VISUAL-EXPERIMENTAL.jar
+          test -f "$jar"
+          hash=$(sha256sum "$jar" | cut -d' ' -f1)
+          echo "::notice title=Original experimental JAR SHA-256::$hash"
+          echo "::notice title=Original build run and artifact::run 43744922837 artifact 14174380272"
