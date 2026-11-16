@@ -1,0 +1,97 @@
+{
+  "format_version": 2,
+  "items": {
+    "minecraft:tnt": [
+      {
+        "type": "legacy",
+        "custom_model_data": 710101,
+        "bedrock_identifier": "geyser_custom:hypertnt_basic",
+        "predicate_strategy": "and",
+        "predicate": {
+          "type": "server_pdc_string",
+          "key": "hypertnt:tnt_type",
+          "value": "tnt"
+        },
+        "bedrock_options": {
+          "icon": "hypertnt_basic",
+          "allow_offhand": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 710102,
+        "bedrock_identifier": "geyser_custom:hypertnt_fire",
+        "predicate_strategy": "and",
+        "predicate": {
+          "type": "server_pdc_string",
+          "key": "hypertnt:tnt_type",
+          "value": "tnt_fire"
+        },
+        "bedrock_options": {
+          "icon": "hypertnt_fire",
+          "allow_offhand": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 710103,
+        "bedrock_identifier": "geyser_custom:hypertnt_obs",
+        "predicate_strategy": "and",
+        "predicate": {
+          "type": "server_pdc_string",
+          "key": "hypertnt:tnt_type",
+          "value": "tnt_obs"
+        },
+        "bedrock_options": {
+          "icon": "hypertnt_obs",
+          "allow_offhand": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 710104,
+        "bedrock_identifier": "geyser_custom:hypertnt_heavy",
+        "predicate_strategy": "and",
+        "predicate": {
+          "type": "server_pdc_string",
+          "key": "hypertnt:tnt_type",
+          "value": "tnt_heavy"
+        },
+        "bedrock_options": {
+          "icon": "hypertnt_heavy",
+          "allow_offhand": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 710105,
+        "bedrock_identifier": "geyser_custom:hypertnt_explosive",
+        "predicate_strategy": "and",
+        "predicate": {
+          "type": "server_pdc_string",
+          "key": "hypertnt:tnt_type",
+          "value": "tnt_explosive"
+        },
+        "bedrock_options": {
+          "icon": "hypertnt_explosive",
+          "allow_offhand": true
+        }
+      },
+      {
+        "type": "legacy",
+        "custom_model_data": 710106,
+        "bedrock_identifier": "geyser_custom:hypertnt_poseidon",
+        "predicate_strategy": "and",
+        "predicate": {
+          "type": "server_pdc_string",
+          "key": "hypertnt:tnt_type",
+          "value": "tnt_poseidon"
+        },
+        "bedrock_options": {
+          "icon": "hypertnt_poseidon",
+          "allow_offhand": true
+        }
+      }
+    ]
+  }
+}

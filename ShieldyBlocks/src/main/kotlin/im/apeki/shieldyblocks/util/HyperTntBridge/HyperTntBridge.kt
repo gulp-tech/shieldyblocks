@@ -1,11 +1,17 @@
 package im.apeki.shieldyblocks.util
 
+import org.bukkit.NamespacedKey
 import org.bukkit.entity.Entity
+import org.bukkit.persistence.PersistentDataType
+import java.util.Locale
 
+/** HyperTNT marks primed TNT with this persistent key; no class-loader coupling is needed. */
 object HyperTntBridge {
-    fun resolveTypeId(entity: Entity): String? = try {
-        val m = Class.forName("me.hyper_tnt.api.HyperTNTAPI")
-            .getMethod("getTntId", Entity::class.java)
-        (m.invoke(null, entity) as? String)?.trim()?.takeIf { it.isNotEmpty() }?.lowercase()
-    } catch (_: Throwable) { null }
+    private val typeKey = NamespacedKey("hypertnt", "tnt_type_entity")
+
+    fun resolveTypeId(entity: Entity): String? = entity.persistentDataContainer
+        .get(typeKey, PersistentDataType.STRING)
+        ?.trim()
+        ?.takeIf { it.isNotEmpty() }
+        ?.lowercase(Locale.ROOT)
 }

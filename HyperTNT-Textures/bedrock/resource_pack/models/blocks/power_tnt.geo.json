@@ -1,0 +1,28 @@
+{
+	"format_version": "1.12.0",
+	"minecraft:geometry": [
+		{
+			"description": {
+				"identifier": "geometry.minty_utnt.power_tnt",
+				"texture_width": 128,
+				"texture_height": 128,
+				"visible_bounds_width": 3,
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
+			},
+			"bones": [
+				{
+					"name": "bone",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{"origin": [8, 0, -8], "size": [5, 16, 16], "uv": [0, 0]},
+						{"origin": [-15, 7, -1], "size": [30, 2, 2], "uv": [42, 0]},
+						{"origin": [-8, 6, -2], "size": [1, 4, 4], "uv": [42, 4]},
+						{"origin": [7, 6, -2], "size": [1, 4, 4], "uv": [42, 12]},
+						{"origin": [-13, 0, -8], "size": [5, 16, 16], "uv": [0, 32]}
+					]
+				}
+			]
+		}
+	]
+}

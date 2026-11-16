@@ -1,0 +1,29 @@
+{
+  "format_version": 2,
+  "header": {
+    "name": "HyperTNT — Bedrock предметы",
+    "description": "Текстуры кастомных TNT HyperTNT. Обычный TNT не изменяется.",
+    "uuid": "907ad498-0586-4601-8cf1-9012c963bfc3",
+    "version": [
+      1,
+      0,
+      0
+    ],
+    "min_engine_version": [
+      1,
+      20,
+      0
+    ]
+  },
+  "modules": [
+    {
+      "type": "resources",
+      "uuid": "07b5c6d9-f090-4451-9bac-3af7ea497805",
+      "version": [
+        1,
+        0,
+        0
+      ]
+    }
+  ]
+}
